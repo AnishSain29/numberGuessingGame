@@ -1,0 +1,55 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class numberGuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        int lowerBound = 1;
+        int upperBound = 100;
+        int maxAttempts = 5;
+        int score = 0;
+        boolean playAgain = true;
+
+        System.out.println("=== Welcome to the Number Guessing Game ===");
+
+        while (playAgain) {
+            int numberToGuess = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+            int attempts = 0;
+            boolean guessedCorrectly = false;
+
+            System.out.println("\nI have selected a number between " + lowerBound + " and " + upperBound + ".");
+            System.out.println("You have " + maxAttempts + " attempts to guess it.");
+
+            while (attempts < maxAttempts) {
+                System.out.print("Enter your guess: ");
+                int userGuess = scanner.nextInt();
+                attempts++;
+
+                if (userGuess == numberToGuess) {
+                    System.out.println("🎉 Correct! You guessed the number in " + attempts + " attempts.");
+                    score++;
+                    guessedCorrectly = true;
+                    break;
+                } else if (userGuess < numberToGuess) {
+                    System.out.println("Too low!");
+                } else {
+                    System.out.println("Too high!");
+                }
+
+                System.out.println("Attempts left: " + (maxAttempts - attempts));
+            }
+
+            if (!guessedCorrectly) {
+                System.out.println("❌ You've used all attempts. The correct number was " + numberToGuess + ".");
+            }
+
+            System.out.print("\nDo you want to play another round? (yes/no): ");
+            String response = scanner.next();
+            playAgain = response.equalsIgnoreCase("yes");
+        }
+
+        System.out.println("\nThanks for playing! Your total score: " + score);
+        scanner.close();
+    }
+}
